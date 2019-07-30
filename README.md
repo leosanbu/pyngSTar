@@ -57,7 +57,7 @@ To run pyngSTar in a fast mode (-f) and requesting new alleles to be printed as 
 python pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
 ```
 
-### Output example:
+### Output example:
 
 ```
 strain         ngSTar  penA     mtrR    porB  ponA  gyrA  parC  23S
