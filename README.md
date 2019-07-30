@@ -41,6 +41,7 @@ optional arguments:
 | -a | print new allele sequences if found (optional). |
 | -o | output filename (default is output to screen). |
 
+A copy of the database (downloaded on July 2019 from https://ngstar.canada.ca) folder is available in pyngSTarDB.tar.gz and contains:
 * \<gene\>_alleles.fasta: 7 allele sequence files with this structure. 
 * ngstar_profiles.tab: 1 file containing the profiles.
 * pyngSTar_alleles_AC.pkl: 1 pickle file containing the preloaded dictionary of allele sequences and numbers as well as the automaton object required by the fast searching algorithm.
