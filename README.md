@@ -14,7 +14,7 @@ The main script is called **pyngSTar.py** and is accompanied by two modules:
 * **pyngSTar_functions.py**: contains basic functions for reading input files, assigning allele numbers (slow mode), reporting profiles, blasting and printing new allele sequences.
 * **pyngSTar_AhoCorasick.py**: imports the pyahocorasick module for fast multi-pattern string search. This is provided separately in case anyone has problems with installing the library (unlikely) and decide to use the slow mode.
 
-If an exact match is not found, **blastn** is called to report the closest matches and the new allele is printed to an output file if requested with -a. Closest matches are marked in the profiles table with an asterisk. If more than 3 alleles are equally close, only 3 are shown in the table. In this case, something may be wrong, i.e. the whole sequence of the allele is not found and only part of it is beign considered, so it is good to take a look at the output fasta files of potentially new alleles.
+If an exact match is not found, **blastn** is called to report the closest matches and the new allele is printed to an output file if requested with -a. Closest matches are marked in the profiles table with an asterisk. If more than 3 alleles are equally close, only 3 are shown in the table. In this case, something may be wrong, i.e. the whole sequence of the allele is not found and only part of it is beign considered, so it is good to take a look at the output fasta files of potential new alleles.
 
 Profiles not found in the local database are marked in the table as 'NEW'.
 
