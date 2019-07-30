@@ -18,6 +18,15 @@ If an exact match is not found, **blastn** is called to report the closest match
 
 Profiles not found in the local database are marked in the table as 'NEW'.
 
+### Summary of python dependencies:
+
+* os, subprocess, argparse
+* pickle
+* pandas
+* SeqIO
+* pyfaidx
+* pyahocorasick (optional)
+
 ### Options:
 
 ```
@@ -79,10 +88,6 @@ For the 419 *N. gonorrhoeae* strains from Sánchez-Busó *et al.* 2019 (https://
 
 Same as NG-MASTER (https://doi.org/10.1099/mgen.0.000076), each typing scheme has its own particularities!!
 
-### Summary of python dependencies:
-* os, subprocess, argparse
-* pickle
-* pandas
-* SeqIO
-* pyfaidx
-* pyahocorasick (optional)
+### Contact:
+
+If you use it and it crashes, or you have an idea to improve it, i'd love to hear from you (leonor.sanchezbuso@bdi.ox.ac.uk).
