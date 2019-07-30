@@ -88,7 +88,7 @@ def blastNewAlleles(query, subject, path):
 		if 'penA' not in x:
 			newx = newx.split('.')[0]
 		clean_alleles.append(newx)
-	return ['|'.join(clean_alleles)+'*', coords, contigloc]
+	return ['|'.join(clean_alleles[0:3])+'*', coords, contigloc]
 
 def printNewAlleleSeqs(gene, coords, contigloc, fasta, allout, path):
 	strand = 1

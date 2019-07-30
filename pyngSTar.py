@@ -39,7 +39,7 @@ if arg.out_filename:
 profilesDB = readProfiles(db_path)
 
 # Load pickled database - dictionary and automaton
-allelesDB, allelesAC = pickle.load(open(db_path+"ngSTar_alleles_AC.pkl", "rb"))
+allelesDB, allelesAC = pickle.load(open(db_path+"pyngSTar_alleles_AC.pkl", "rb"))
 
 # order of loci in NG-STAR scheme
 order = ['penA', 'mtrR', 'porB', 'ponA', 'gyrA', 'parC', '23S']
@@ -85,7 +85,7 @@ for f in filelist:
 			print(fname+'\t'+ngstar_st+'\t'+ngstar_prof)
 
 # clean output files
-subprocess.call(['rm', '-r', 'tmp', '__pycache__'])
+subprocess.call(['rm', '-r', 'tmp'])
 subprocess.call(''.join('rm '+filepath+'/'+'*.fai'), shell=True)
 
 
