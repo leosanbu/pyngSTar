@@ -6,7 +6,7 @@ NG-STAR (*Neisseria gonorrhoeae* Sequence Typing for Antimicrobial Resistance) i
 
 The NG-STAR database and web application is hosted by the Public Health Agency of Canada, National Microbiology Laboratory (walter.demczuk@canada.ca) and can be accessed from: https://ngstar.canada.ca. More information on the scheme can be found in that same webpage and their paper cited above.
 
-**pyngSTar** is a python script to do NG-STAR typing in *Neisseria gonorrhoeae* genome assemblies. It can be run on a slow(er) or a fast mode (-f) if you have a large collection. 
+**pyngSTar** is a python3 script to do NG-STAR typing in *Neisseria gonorrhoeae* genome assemblies. To look for exact matches, it can be run on a slow(er) or a fast mode (-f) if you have a large collection. 
 * **Fast** mode (-f, recommended): uses a python module implementing the Aho-Corasick algorithm for multi-pattern string search (https://github.com/WojciechMula/pyahocorasick/).
 * **Slow**(er) mode: loops through the keys of a dictionary containing the forward and reverse complementary of the alleles of the seven genes.
 
@@ -14,7 +14,11 @@ The main script is called **pyngSTar.py** and is accompanied by two modules:
 * **pyngSTar_functions.py**: contains basic functions for reading input files, assigning allele numbers (slow mode), reporting profiles, blasting and printing new allele sequences.
 * **pyngSTar_AhoCorasick.py**: imports the pyahocorasick module for fast multi-pattern string search. This is provided separately in case anyone has problems with installing the library (unlikely) and decide to use the slow mode.
 
-### Usage:
+If an exact match is not found, **blastn** is called to report the closest matches and the new allele is printed to an output file if requested with -a. Closest matches are marked in the profiles table with an asterisk. If more than 3 alleles are equally close, only 3 are shown in the table.
+
+Profiles not found in the local database are marked in the table as 'NEW'.
+
+### Options:
 
 ```
 usage: pyngSTar.py [options]
@@ -46,6 +50,27 @@ A copy of the database (downloaded on July 2019 from https://ngstar.canada.ca) f
 * ngstar_profiles.tab: 1 file containing the profiles.
 * pyngSTar_alleles_AC.pkl: 1 pickle file containing the preloaded dictionary of allele sequences and numbers as well as the automaton object required by the fast searching algorithm.
 
+### Usage:
+
+To run pyngSTar in a fast mode (-f) and requesting new alleles to be printed as fasta files (-a):
+```
+python pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
+```
+
+### Output example:
+
+```
+strain         ngSTar  penA     mtrR    porB  ponA  gyrA  parC  23S
+10356_1#33.fa  NEW     19.001   25|86*  100   1     100   7     100
+10625_6#40.fa  NEW     14.001*  54      100   1     1     18    100
+10625_6#8.fa   127     5.002    1       8     1     1     3     100
+11792_4#61.fa  356     2.001    10      100   100   1     18    100
+```
+This will produce two fasta files containing the new alleles found for *penA* and *mtrR*. The header of the sequences indicate have the gene name, the contig name where the gene was found and the start and end coordinates in that contig where the sequence was pulled out from:
+```
+>mtrR_.10356_1_33.8_29704:30403
+TTGCATGGTTACAAAGTCTTTTTTATAATCCGCCCTCATCAAACCGACCCGAAACGAAACCGCCA...
+````
 
 ### Summary of python dependencies:
 * os, subprocess, argparse
