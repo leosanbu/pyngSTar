@@ -91,3 +91,7 @@ Same as NG-MASTER (https://doi.org/10.1099/mgen.0.000076), each typing scheme ha
 ### Contact:
 
 If you use it and it crashes, or you have an idea to improve it, i'd love to hear from you (leonor.sanchezbuso@bdi.ox.ac.uk).
+
+### Citation:
+
+Please, if you use this script for a publication, cite the original work by Walter Demczuk and colleagues https://doi.org/10.1128/JCM.00100-17 and a link to this github page! 
