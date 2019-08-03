@@ -7,17 +7,18 @@ NG-STAR (*Neisseria gonorrhoeae* Sequence Typing for Antimicrobial Resistance) i
 The NG-STAR database and web application is hosted by the Public Health Agency of Canada, National Microbiology Laboratory (walter.demczuk@canada.ca) and can be accessed from: https://ngstar.canada.ca. More information on the scheme can be found in that same webpage and their paper cited above.
 
 **pyngSTar** is a python3 script to do NG-STAR typing in *Neisseria gonorrhoeae* genome assemblies. To look for exact matches, it can be run on a slow(er) or a fast mode (-f) if you have a large collection. 
-* **Fast** mode (-f, recommended): uses a python module implementing the Aho-Corasick algorithm for multi-pattern string search (https://github.com/WojciechMula/pyahocorasick/). To install this package simply do:
-```
-pip install pyahocorasick
-```
+* **Fast** mode (-f, recommended): uses a python module implementing the Aho-Corasick algorithm for multi-pattern string search (https://github.com/WojciechMula/pyahocorasick/).
 * **Slow**(er) mode: loops through the keys of a dictionary containing the forward and reverse complementary of the alleles of the seven genes.
 
 The main script is called **pyngSTar.py** and is accompanied by two modules:
 * **pyngSTar_functions.py**: contains basic functions for reading input files, assigning allele numbers (slow mode), reporting profiles, blasting and printing new allele sequences.
 * **pyngSTar_AhoCorasick.py**: imports the pyahocorasick module for fast multi-pattern string search. This is provided separately in case anyone has problems with installing the library (unlikely) and decide to use the slow mode.
 
-If an exact match is not found, **blastn** is called to report the closest matches and the new allele is printed to an output file if requested with -a. Closest matches are marked in the profiles table with an asterisk. If more than 3 alleles are equally close, only 3 are shown in the table. In this case, something may be wrong, i.e. the whole sequence of the allele is not found and only part of it is beign considered, so it is good to take a look at the output fasta files of potential new alleles.
+### When an exact match is not found: closest alleles
+
+If an exact match is not found, **blastn** is called to report the closest matches and the new allele is printed to an output file if requested with -a. Closest matches are marked in the profiles table with an asterisk. 
+
+**NOTE:** If more than 3 alleles are equally close, only 3 are shown in the table. In this case, something may be wrong, i.e. the whole sequence of the allele is not found and only part of it is being considered, so it is good to take a look at the length of the sequences of the potential new alleles requested with -a.
 
 Profiles not found in the local database are marked in the table as 'NEW'.
 
@@ -29,6 +30,45 @@ Profiles not found in the local database are marked in the table as 'NEW'.
 * SeqIO (biopython)
 * pyfaidx
 * pyahocorasick (optional)
+
+### How do I install these dependencies?
+
+Use pip install and a list of the missing modules:
+```
+pip install pandas pyfaidx biopython pyahocorasick
+```
+If you need some of the others just use pip install also on those.
+
+### What if I don't have admin rights to install python modules?
+
+Then I recommend to create a **python virtual environment** following these steps:
+
+Create and activate a virtual environment (venv or any other name):
+```
+virtualenv venv
+source venv/bin/activate
+```
+Install dependencies inside the environment:
+```
+pip install pandas pyfaidx biopython pyahocorasick
+```
+Run pyngSTar:
+```
+python pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
+```
+Exit the virtual environment:
+```
+deactivate
+```
+
+**IMPORTANT:** You only need to create the virtual environment and install dependencies **once**, afterwards just activate it, run pyngSTar and then deactivate when it’s finished:
+```
+# activate virtualenv
+source venv/bin/activate
+# run pyngSTar
+# exit virtualenv
+deactivate
+```
 
 ### Options:
 
@@ -97,4 +137,4 @@ If you use it and it crashes, or you have an idea to improve it, i'd love to hea
 
 ### Citation:
 
-Please, if you use this script for a publication, cite the original work by Walter Demczuk and colleagues https://doi.org/10.1128/JCM.00100-17 and a link to this github page! 
+Please, if you use this script for a publication, cite the original work by Walter Demczuk and colleagues https://doi.org/10.1128/JCM.00100-17 and a link to this github page :) 
