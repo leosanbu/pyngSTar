@@ -56,6 +56,7 @@ else:
 subprocess.call(['mkdir', 'tmp'])
 
 # process files
+need_blast = 0
 for f in filelist:
 	fname = f.split('/').pop()
 	with open(f, 'r') as fasta:
@@ -70,6 +71,7 @@ for f in filelist:
 		save_new_alleles = {}
 		for x in resultsDB:
 			if resultsDB[x] == '-':
+				need_blast = 1
 				query_file = x+'_alleles.fasta'
 				subject_file = f
 				closest_allele, coords, contigloc = blastNewAlleles(query_file, subject_file, db_path)
@@ -86,7 +88,8 @@ for f in filelist:
 
 # clean output files
 subprocess.call(['rm', '-r', 'tmp'])
-subprocess.call(''.join('rm '+filepath+'/'+'*.fai'), shell=True)
+if need_blast == 1:
+	subprocess.call(''.join('rm '+filepath+'/'+'*.fai'), shell=True)
 
 
 
