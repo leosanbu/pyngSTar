@@ -7,7 +7,10 @@ NG-STAR (*Neisseria gonorrhoeae* Sequence Typing for Antimicrobial Resistance) i
 The NG-STAR database and web application is hosted by the Public Health Agency of Canada, National Microbiology Laboratory (walter.demczuk@canada.ca) and can be accessed from: https://ngstar.canada.ca. More information on the scheme can be found in that same webpage and their paper cited above.
 
 **pyngSTar** is a python3 script to do NG-STAR typing in *Neisseria gonorrhoeae* genome assemblies. To look for exact matches, it can be run on a slow(er) or a fast mode (-f) if you have a large collection. 
-* **Fast** mode (-f, recommended): uses a python module implementing the Aho-Corasick algorithm for multi-pattern string search (https://github.com/WojciechMula/pyahocorasick/).
+* **Fast** mode (-f, recommended): uses a python module implementing the Aho-Corasick algorithm for multi-pattern string search (https://github.com/WojciechMula/pyahocorasick/). To install this package simply do:
+```
+pip install pyahocorasick
+```
 * **Slow**(er) mode: loops through the keys of a dictionary containing the forward and reverse complementary of the alleles of the seven genes.
 
 The main script is called **pyngSTar.py** and is accompanied by two modules:
