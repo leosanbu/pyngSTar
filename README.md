@@ -26,7 +26,7 @@ Profiles not found in the local database are marked in the table as 'NEW'.
 * os, subprocess, argparse
 * pickle
 * pandas
-* SeqIO
+* SeqIO (biopython)
 * pyfaidx
 * pyahocorasick (optional)
 
