@@ -22,6 +22,11 @@ If an exact match is not found, **blastn** is called to report the closest match
 
 Profiles not found in the local database are marked in the table as 'NEW'.
 
+### 23S alleles or (artefactually) duplicated genes
+
+From the seven genes in the scheme, we only expect to have more than one copy in the case of 23S (4 copies). \
+pyngSTar will detect if there is more than one allele and output them separated by an underscore '_'. In this case, the final ST will appear as 'NEW' and the user will have to work out if any of those alleles are part of an existing profile.
+
 ### Summary of python dependencies:
 
 * os, subprocess, argparse
