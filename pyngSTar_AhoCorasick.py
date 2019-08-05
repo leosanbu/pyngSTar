@@ -5,7 +5,10 @@ def AC_fast(seq, order, allelesDB, allelesAC):
 	for i in order:
 		results[i] = '-'
 	for end_index, (insert_order, original_value) in allelesAC.iter(seq):
-		results[allelesDB[original_value].gene] = allelesDB[original_value].allele
+		if type(results[allelesDB[original_value].gene]) is not list:
+			results[allelesDB[original_value].gene] = [allelesDB[original_value].allele]
+		else:
+			results[allelesDB[original_value].gene].append(allelesDB[original_value].allele)
 	return results
 
 # code to create pickle file

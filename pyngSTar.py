@@ -71,11 +71,11 @@ for f in filelist:
 		save_new_alleles = {}
 		for x in resultsDB:
 			if resultsDB[x] == '-':
-				need_blast = 1
 				query_file = x+'_alleles.fasta'
 				subject_file = f
 				blastout = blastNewAlleles(query_file, subject_file, db_path)
 				if len(blastout)>1:
+					need_blast = 1
 					closest_allele, coords, contigloc = blastout
 					resultsDB[x] = closest_allele
 					save_new_alleles[x] = printNewAlleleSeqs(x, coords, contigloc, f, allout, out_path)

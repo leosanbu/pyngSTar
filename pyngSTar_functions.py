@@ -54,13 +54,28 @@ def assignAllele(seq, order, allelesDB):
 		results[i] = '-'
 	for allele in allelesDB:
 		if allele in seq:
-			results[allelesDB[allele].gene] = allelesDB[allele].allele
+			if type(results[allelesDB[allele].gene]) is not list:
+				results[allelesDB[allele].gene] = [allelesDB[allele].allele]
+			else:
+				results[allelesDB[allele].gene].append(allelesDB[allele].allele)
 	return results
 
 def reportProfile(order, results):
-	profile = results[order[0]]
-	for i in order[1:]:
-		profile += '\t'+results[i]
+	profile = ''
+	for i in order:
+		# check if multiple alleles (i.e. 23S)
+		check_copies = results[i]
+		if len(check_copies)>1:
+			unique_copies = '_'.join(list(pd.unique(results[i])))
+			if profile is '':
+				profile = unique_copies
+			else:
+				profile += '\t'+unique_copies
+		else:
+			if profile is '':
+				profile = check_copies[0]
+			else:
+				profile += '\t'+check_copies[0]
 	return profile
 
 def blastNewAlleles(query, subject, path):
