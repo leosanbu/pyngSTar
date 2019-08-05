@@ -74,13 +74,17 @@ for f in filelist:
 				need_blast = 1
 				query_file = x+'_alleles.fasta'
 				subject_file = f
-				closest_allele, coords, contigloc = blastNewAlleles(query_file, subject_file, db_path)
-				resultsDB[x] = closest_allele
-				save_new_alleles[x] = printNewAlleleSeqs(x, coords, contigloc, f, allout, out_path)
+				blastout = blastNewAlleles(query_file, subject_file, db_path)
+				if len(blastout)>1:
+					closest_allele, coords, contigloc = blastout
+					resultsDB[x] = closest_allele
+					save_new_alleles[x] = printNewAlleleSeqs(x, coords, contigloc, f, allout, out_path)
 		# get profile and assign ST
 		ngstar_prof = reportProfile(order, resultsDB)
 		defaultST = 'NEW'
 		ngstar_st = profilesDB.get(ngstar_prof, defaultST)
+		if '-' in ngstar_prof:
+			ngstar_st = '-'
 		if outfile:
 			outfilehandle.write(fname+'\t'+ngstar_st+'\t'+ngstar_prof+'\n')
 		else:

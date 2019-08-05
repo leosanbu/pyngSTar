@@ -65,30 +65,34 @@ def reportProfile(order, results):
 
 def blastNewAlleles(query, subject, path):
 	# run makeblastdb on subject (genome)
-	makeblastdb_cmd = ["makeblastdb", "-in", subject, "-dbtype", "nucl", "-out", "tmp/"+subject]
+	subject_name = subject.split('/').pop()
+	makeblastdb_cmd = ["makeblastdb", "-in", subject, "-dbtype", "nucl", "-out", "tmp/"+subject_name]
 	subprocess.call(makeblastdb_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 	# run blastn
-	blast_cmd = ["blastn", "-out", 'tmp/'+subject+'.blastn', "-outfmt", "6", "-query", path+'/'+query, "-db", "tmp/"+subject, "-evalue", "0.001"]
+	blast_cmd = ["blastn", "-out", 'tmp/'+subject_name+'.blastn', "-outfmt", "6", "-query", path+'/'+query, "-db", "tmp/"+subject_name, "-evalue", "0.001"]
 	subprocess.call(blast_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-	# read tabular output with pandas
-	bresult = pd.read_csv('tmp/'+subject+'.blastn', sep="\t", header=None)
-	# get value of max bitscore
-	max_bitscore = bresult[11].max()
-	# get alleles with same bitscore
-	subresult = bresult.loc[bresult[11] == max_bitscore]
-	sublist = subresult[[0]][0].tolist()
-	# get coordinates of queried alleles
-	coords = subresult.iloc[0,8:10].tolist()
-	# get contig name of hit
-	contigloc = subresult.iloc[0,1]
-	# get number from closest allele names
-	clean_alleles = []
-	for x in sublist:
-		newx = x.split('_')[1]
-		if 'penA' not in x:
-			newx = newx.split('.')[0]
-		clean_alleles.append(newx)
-	return ['|'.join(clean_alleles[0:3])+'*', coords, contigloc]
+	ret = ['-']
+	# read tabular output with pandas if file exists
+	if os.path.getsize('tmp/'+subject_name+'.blastn') > 0:
+		bresult = pd.read_csv('tmp/'+subject_name+'.blastn', sep="\t", header=None)
+		# get value of max bitscore
+		max_bitscore = bresult[11].max()
+		# get alleles with same bitscore
+		subresult = bresult.loc[bresult[11] == max_bitscore]
+		sublist = subresult[[0]][0].tolist()
+		# get coordinates of queried alleles
+		coords = subresult.iloc[0,8:10].tolist()
+		# get contig name of hit
+		contigloc = subresult.iloc[0,1]
+		# get number from closest allele names
+		clean_alleles = []
+		for x in sublist:
+			newx = x.split('_')[1]
+			if 'penA' not in x:
+				newx = newx.split('.')[0]
+			clean_alleles.append(newx)
+		ret = ['|'.join(clean_alleles[0:3])+'*', coords, contigloc]
+	return ret
 
 def printNewAlleleSeqs(gene, coords, contigloc, fasta, allout, path):
 	strand = 1
