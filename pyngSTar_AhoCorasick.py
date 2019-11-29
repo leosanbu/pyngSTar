@@ -1,4 +1,12 @@
+import pickle
 import ahocorasick
+
+def updatePKL(path, allelesDB):
+	allelesAC = ahocorasick.Automaton()
+	for idx,key in enumerate(allelesDB):
+		allelesAC.add_word(key, (idx, key))
+	allelesAC.make_automaton()
+	pickle.dump((allelesDB, allelesAC), open(path+'/'+'pyngSTar_alleles_AC.pkl', 'wb'))
 
 def AC_fast(seq, order, allelesDB, allelesAC):
 	results = {}
@@ -11,9 +19,3 @@ def AC_fast(seq, order, allelesDB, allelesAC):
 			results[allelesDB[original_value].gene].append(allelesDB[original_value].allele)
 	return results
 
-# code to create pickle file
-#allelesAC = ahocorasick.Automaton()
-#for idx,key in enumerate(allelesDB):
-#	allelesAC.add_word(key, (idx, key))
-#allelesAC.make_automaton()
-#pickle.dump((allelesDB, allelesAC), open("ngSTar_alleles_AC.pkl", "wb"))

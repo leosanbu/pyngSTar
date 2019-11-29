@@ -1,5 +1,4 @@
 import os
-import pickle
 import subprocess
 import pandas as pd
 from Bio import SeqIO
@@ -81,15 +80,15 @@ def reportProfile(order, results):
 def blastNewAlleles(query, subject, path):
 	# run makeblastdb on subject (genome)
 	subject_name = subject.split('/').pop()
-	makeblastdb_cmd = ["makeblastdb", "-in", subject, "-dbtype", "nucl", "-out", "tmp/"+subject_name]
+	makeblastdb_cmd = ['makeblastdb', '-in', subject, '-dbtype', 'nucl', '-out', 'tmp/'+subject_name]
 	subprocess.call(makeblastdb_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 	# run blastn
-	blast_cmd = ["blastn", "-out", 'tmp/'+subject_name+'.blastn', "-outfmt", "6", "-query", path+'/'+query, "-db", "tmp/"+subject_name, "-evalue", "0.001"]
+	blast_cmd = ['blastn', '-out', 'tmp/'+subject_name+'.blastn', '-outfmt', '6', '-query', path+'/'+query, '-db', 'tmp/'+subject_name, '-evalue', '0.001']
 	subprocess.call(blast_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 	ret = ['-']
 	# read tabular output with pandas if file exists
 	if os.path.getsize('tmp/'+subject_name+'.blastn') > 0:
-		bresult = pd.read_csv('tmp/'+subject_name+'.blastn', sep="\t", header=None)
+		bresult = pd.read_csv('tmp/'+subject_name+'.blastn', sep='\t', header=None)
 		# get value of max bitscore
 		max_bitscore = bresult[11].max()
 		# get alleles with same bitscore
@@ -117,7 +116,7 @@ def printNewAlleleSeqs(gene, coords, contigloc, fasta, allout, path):
 		endcoord, startcoord = coords
 	# read genome and extract locus
 	genome = Fasta(fasta)
-	locus = genome[contigloc][startcoord:endcoord]
+	locus = genome[contigloc][(startcoord-1):endcoord]
 	if strand == -1:
 		locus.seq = revComp(locus.seq)
 	# print to file
@@ -127,3 +126,4 @@ def printNewAlleleSeqs(gene, coords, contigloc, fasta, allout, path):
 			out.write('>'+gene+'_'+locus.name+'_'+str(startcoord)+':'+str(endcoord)+'\n')
 			out.write(locus.seq+'\n')
 	return locus
+
