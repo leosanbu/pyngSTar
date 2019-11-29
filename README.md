@@ -132,9 +132,19 @@ TTGCATGGTTACAAAGTCTTTTTTATAATCCGCCCTCATCAAACCGACCCGAAACGAAACCGCCA...
 
 For the 419 *N. gonorrhoeae* strains from Sánchez-Busó *et al.* 2019 (https://www.nature.com/articles/s41564-019-0501-y), pyngSTar on the fast mode took just 1min 31s!!
 
+### Updating the database:
+
+Go to https://ngstar.canada.ca and manually download the profiles table and the 7 fasta files of alleles. 
+Copy/paste the profiles table from the Excel file to a plain text file and call it 'ngstar_profiles.tab'.
+Move the 8 files (table in text format and fasta files) to the database folder. 
+Recreate the pickle file (pyngSTar_alleles_AC.pkl), which will boost the speed of subsequent runs on the --fast mode, by running:
+```
+python3 pyngSTar.py -p pyngSTarDB -u
+```
+
 ### Why another typing script?
 
-Same as NG-MASTER (https://doi.org/10.1099/mgen.0.000076), each typing scheme has its own particularities!!
+Same as with NG-MASTER (https://doi.org/10.1099/mgen.0.000076), each typing scheme has its own particularities!!
 
 ### Contact:
 
