@@ -38,15 +38,15 @@ pyngSTar will detect if there is more than one allele and output them separated 
 
 ### How do I install these dependencies?
 
-Use pip install and a list of the missing modules:
+Use pip3 install and a list of the missing modules:
 ```
-pip install pandas pyfaidx biopython pyahocorasick
+pip3 install pandas pyfaidx biopython pyahocorasick
 ```
-If you need some of the others just use pip install also on those.
+If you need some of the others just use pip3 install also on those.
 
 ### What if I don't have admin rights to install python modules?
 
-Then I recommend to create a **python virtual environment** following these steps:
+Then I recommend to create a **python3 virtual environment** following these steps:
 
 Create and activate a virtual environment (venv or any other name):
 ```
@@ -55,11 +55,11 @@ source venv/bin/activate
 ```
 Install dependencies inside the environment:
 ```
-pip install pandas pyfaidx biopython pyahocorasick
+pip3 install pandas pyfaidx biopython pyahocorasick
 ```
 Run pyngSTar:
 ```
-python pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
+python3 pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
 ```
 Exit the virtual environment:
 ```
@@ -111,7 +111,7 @@ A copy of the database (downloaded on July 2019 from https://ngstar.canada.ca) f
 
 To run pyngSTar in a fast mode (-f) and requesting new alleles to be printed as fasta files (-a):
 ```
-python pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
+python3 pyngSTar.py -f -a -i /path/to/assemblies/*.fa -p pyngSTarDB/
 ```
 Add -o \<filename\> if you want the output to go to a file instead of the screen.
 
