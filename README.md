@@ -135,7 +135,7 @@ For the 419 *N. gonorrhoeae* strains from Sánchez-Busó *et al.* 2019 (https://
 ### Updating the database:
 
 Go to https://ngstar.canada.ca and manually download the profiles table and the 7 fasta files of alleles. 
-Copy/paste the profiles table from the Excel file to a plain text file and call it 'ngstar_profiles.tab'.
+Copy/paste the profiles table from the Excel file to a plain text file and call it 'ngstar_profiles.tab' (replace "Sequence Type" by "ST" in the header).
 Move the 8 files (table in text format and fasta files) to the database folder. 
 Recreate the pickle file (pyngSTar_alleles_AC.pkl), which will boost the speed of subsequent runs on the --fast mode, by running:
 ```
